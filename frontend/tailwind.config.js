@@ -36,6 +36,7 @@ export default {
         'pulse-dot': 'pulseDot 1.8s ease-in-out infinite',
         'spin-slow': 'spin 2s linear infinite',
         'blob':      'blob 8s ease-in-out infinite',
+        'float':     'float 3s ease-in-out infinite',
       },
       keyframes: {
         fadeUp: {
@@ -53,6 +54,10 @@ export default {
         blob: {
           '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
           '50%':      { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%':      { transform: 'translateY(-15px)' },
         },
       },
       backdropBlur: {
