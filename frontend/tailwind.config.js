@@ -7,57 +7,47 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Poppins', 'system-ui', 'sans-serif'],
       },
       colors: {
         brand: {
-          50:  '#f0f4ff',
-          100: '#e0e9ff',
-          200: '#c7d7fe',
-          300: '#a4bcfd',
-          400: '#7b97fa',
-          500: '#5b73f5',
-          600: '#4253e8',
-          700: '#3541cd',
-          800: '#2c37a6',
-          900: '#2a3484',
-          950: '#1a2051',
+          50:  '#f5f7ff',
+          100: '#ebf0fe',
+          200: '#dae3ff',
+          300: '#b8c7ff',
+          400: '#8da0fc',
+          500: '#6366f1', // Primary Indigo
+          600: '#4f46e5',
+          700: '#4338ca',
+          800: '#3730a3',
+          900: '#312e81',
+          950: '#1e1b4b',
         },
         surface: {
-          900: '#0d0f1a',
-          800: '#13162a',
-          700: '#1a1f38',
-          600: '#232845',
+          900: '#0a0c10', // Deeper, more neutral
+          800: '#11141a',
+          700: '#1b1f27',
+          600: '#262c36',
         },
       },
       animation: {
         'fade-up':   'fadeUp 0.5s ease both',
         'fade-in':   'fadeIn 0.4s ease both',
-        'pulse-dot': 'pulseDot 1.8s ease-in-out infinite',
-        'spin-slow': 'spin 2s linear infinite',
-        'blob':      'blob 8s ease-in-out infinite',
-        'float':     'float 3s ease-in-out infinite',
+        'spin-slow': 'spin 3s linear infinite',
+        'float':     'float 4s ease-in-out infinite',
       },
       keyframes: {
         fadeUp: {
-          '0%':   { opacity: '0', transform: 'translateY(20px)' },
+          '0%':   { opacity: '0', transform: 'translateY(10px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         fadeIn: {
           '0%':   { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        pulseDot: {
-          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
-          '50%':      { opacity: '0.5', transform: 'scale(0.8)' },
-        },
-        blob: {
-          '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
-          '50%':      { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
-        },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%':      { transform: 'translateY(-15px)' },
+          '50%':      { transform: 'translateY(-8px)' },
         },
       },
       backdropBlur: {

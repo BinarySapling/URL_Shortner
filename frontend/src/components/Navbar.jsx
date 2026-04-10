@@ -2,31 +2,27 @@ import { Zap } from 'lucide-react';
 
 export default function Navbar() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="glass border-b border-brand-700/20 px-4">
-        <div className="max-w-6xl mx-auto h-16 flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+      <div className="bg-surface-900/80 backdrop-blur-lg border-b border-white/5 px-4">
+        <div className="max-w-7xl mx-auto h-20 flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3 group" id="nav-logo">
-            <img 
-              src="/logo.png" 
-              alt="Snip Logo" 
-              className="w-9 h-9 object-contain rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-200"
-            />
-            <span className="text-2xl font-black tracking-tighter gradient-text">snip</span>
+          <a href="#" className="flex items-center gap-2 group" id="nav-logo">
+            <span className="text-xl font-bold tracking-[0.2em] text-white">SNIP</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-500" />
           </a>
 
           {/* Nav links */}
-          <nav className="hidden md:flex items-center gap-6" aria-label="Main navigation">
-            <a href="#features" className="text-sm text-blue-200/70 hover:text-white transition-colors duration-200">
-              Features
+          <nav className="hidden md:flex items-center gap-10" aria-label="Main navigation">
+            <a href="#features" className="text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors duration-200">
+              Capabilities
             </a>
-            <a href="#how-it-works" className="text-sm text-blue-200/70 hover:text-white transition-colors duration-200">
-              How it works
+            <a href="#how-it-works" className="text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors duration-200">
+              Workflow
             </a>
             <a
               href="#shortener"
               id="nav-cta"
-              className="px-4 py-2 text-sm font-semibold rounded-xl bg-brand-600 hover:bg-brand-500 text-white transition-all duration-200 glow-sm hover:glow"
+              className="px-6 py-2.5 text-[11px] font-bold uppercase tracking-widest rounded-full bg-white text-surface-900 hover:bg-white/90 transition-all duration-200"
             >
               Get Started
             </a>
@@ -35,9 +31,9 @@ export default function Navbar() {
           {/* Mobile CTA */}
           <a
             href="#shortener"
-            className="md:hidden px-4 py-2 text-sm font-semibold rounded-xl bg-brand-600 hover:bg-brand-500 text-white transition-all duration-200"
+            className="md:hidden px-5 py-2 text-[11px] font-bold uppercase tracking-widest rounded-full bg-white text-surface-900 transition-all duration-200"
           >
-            Start →
+            Start
           </a>
         </div>
       </div>

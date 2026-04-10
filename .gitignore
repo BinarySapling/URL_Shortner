@@ -29,3 +29,5 @@ frontend/dist/
 *.sln
 *.sw?
 *.pem
+*.txt
+*.txt.un~

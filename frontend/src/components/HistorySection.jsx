@@ -45,7 +45,7 @@ function HistoryItem({ item }) {
   };
 
   return (
-    <li className="glass-light rounded-2xl p-4 flex items-center gap-4 hover:border-brand-500/20 transition-all duration-200 group">
+    <li className="border border-white/5 rounded-[1.25rem] p-4 flex items-center gap-5 hover:bg-white/[0.02] transition-all duration-300 group">
       {/* Short URL */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
@@ -53,17 +53,17 @@ function HistoryItem({ item }) {
             href={item.shortUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-brand-400 font-semibold text-sm hover:text-brand-300 transition-colors flex items-center gap-1.5 truncate"
+            className="text-white/80 font-medium text-sm hover:text-white transition-colors flex items-center gap-2 truncate"
           >
             {item.shortUrl}
-            <ExternalLink size={12} className="opacity-60 shrink-0" />
+            <ExternalLink size={12} className="opacity-20 shrink-0" />
           </a>
         </div>
-        <p className="text-xs text-blue-200/40 truncate">{item.originalUrl}</p>
+        <p className="text-[10px] text-white/20 truncate uppercase tracking-wider">{item.originalUrl}</p>
       </div>
 
       {/* Time */}
-      <span className="hidden sm:block text-xs text-blue-200/30 shrink-0">
+      <span className="hidden sm:block text-[10px] font-bold text-white/10 shrink-0 uppercase tracking-widest">
         {timeAgo(item.createdAt)}
       </span>
 
@@ -71,7 +71,7 @@ function HistoryItem({ item }) {
       <button
         type="button"
         onClick={copy}
-        className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center glass-light hover:bg-brand-600/20 text-blue-200/50 hover:text-brand-400 transition-all duration-150"
+        className="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center border border-white/5 hover:border-white/10 text-white/20 hover:text-white transition-all duration-200"
         aria-label={`Copy ${item.shortUrl}`}
       >
         {copied ? <Check size={14} /> : <Copy size={14} />}
@@ -82,25 +82,24 @@ function HistoryItem({ item }) {
 
 export default function HistorySection({ history, onClear }) {
   return (
-    <section id="history" className="px-4 pb-20" aria-labelledby="history-heading">
+    <section id="history" className="px-4 pb-32" aria-labelledby="history-heading">
       <div className="max-w-2xl mx-auto">
-        <div className="flex items-center justify-between mb-4">
-          <h2 id="history-heading" className="text-lg font-semibold text-white">
-            Recent links
-            <span className="ml-2 text-xs font-normal text-blue-200/40">({history.length})</span>
+        <div className="flex items-center justify-between mb-6 px-1">
+          <h2 id="history-heading" className="text-sm font-bold text-white/30 uppercase tracking-[0.3em]">
+            History
           </h2>
           <button
             id="clear-history-btn"
             type="button"
             onClick={onClear}
-            className="flex items-center gap-1.5 text-xs text-blue-200/40 hover:text-red-400 transition-colors duration-150"
+            className="flex items-center gap-2 text-[10px] font-bold text-white/20 hover:text-red-400 transition-colors duration-200 uppercase tracking-widest"
           >
-            <Trash2 size={13} />
-            Clear all
+            <Trash2 size={12} />
+            Clear
           </button>
         </div>
 
-        <ul className="flex flex-col gap-2" role="list">
+        <ul className="flex flex-col gap-3" role="list">
           {history.map((item) => (
             <HistoryItem key={item.shortUrl} item={item} />
           ))}
@@ -109,3 +108,4 @@ export default function HistorySection({ history, onClear }) {
     </section>
   );
 }
+

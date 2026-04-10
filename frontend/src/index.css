@@ -10,57 +10,45 @@
     scroll-behavior: smooth;
   }
   ::selection {
-    background: #5b73f5;
+    background: #6366f1;
     color: #fff;
   }
   ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0d0f1a;
+    background: #0a0c10;
   }
   ::-webkit-scrollbar-thumb {
-    background: #3541cd;
+    background: #262c36;
     border-radius: 3px;
   }
 }
 
 @layer utilities {
   .gradient-text {
-    background: linear-gradient(135deg, #7b97fa 0%, #5b73f5 50%, #a78bfa 100%);
+    background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .glass {
-    background: rgba(26, 31, 56, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(91, 115, 245, 0.15);
+    background: rgba(16, 20, 26, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .glass-light {
-    background: rgba(35, 40, 69, 0.5);
+    background: rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(91, 115, 245, 0.1);
-  }
-
-  .glow {
-    box-shadow: 0 0 40px rgba(91, 115, 245, 0.25), 0 0 80px rgba(91, 115, 245, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.04);
   }
 
   .glow-sm {
-    box-shadow: 0 0 20px rgba(91, 115, 245, 0.2);
-  }
-
-  .blob-bg {
-    position: absolute;
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    filter: blur(60px);
-    animation: blob 8s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   }
 }
+

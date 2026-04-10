@@ -94,40 +94,39 @@ export default function ShortenerCard({ onSuccess }) {
   };
 
   return (
-    <section id="shortener" className="px-4 pb-20" aria-labelledby="shortener-heading">
+    <section id="shortener" className="px-4 pb-12" aria-labelledby="shortener-heading">
       <div className="max-w-2xl mx-auto">
-        <div className="glass rounded-3xl p-8 md:p-10 glow animate-fade-up" style={{ animationDelay: '0.1s' }}>
-
+        <div className="glass rounded-3xl p-6 md:p-8 glow animate-fade-up" style={{ animationDelay: '0.1s' }}>
           {!result ? (
             <>
               {/* Card Header */}
-              <div className="mb-8">
-                <h2 id="shortener-heading" className="text-2xl font-bold text-white mb-2">
-                  Shorten your URL
+              <div className="mb-10">
+                <h2 id="shortener-heading" className="text-2xl font-semibold text-white mb-2">
+                  Shorten Link
                 </h2>
-                <p className="text-blue-200/50 text-sm">
-                  Paste your link below and we'll make it snappy.
+                <p className="text-white/30 text-sm font-light">
+                  Paste your URL below to generate a high-performance short link.
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} noValidate>
                 {/* URL Input */}
                 <div
-                  className={`flex items-center gap-3 rounded-2xl border bg-surface-800 px-4 py-1 transition-all duration-200
+                  className={`flex items-center gap-4 rounded-2xl border bg-white/5 px-5 py-2 transition-all duration-300
                     ${error
-                      ? 'border-red-500/60 shadow-[0_0_0_3px_rgba(239,68,68,0.15)]'
-                      : 'border-brand-700/40 focus-within:border-brand-500 focus-within:shadow-[0_0_0_3px_rgba(91,115,245,0.15)]'
+                      ? 'border-red-500/40'
+                      : 'border-white/5 focus-within:border-brand-500/50'
                     }`}
                 >
-                  <Link2 size={18} className="text-brand-400 shrink-0" aria-hidden="true" />
+                  <Link2 size={20} className="text-white/20 shrink-0" aria-hidden="true" />
                   <input
                     ref={inputRef}
                     id="url-input"
                     type="url"
                     value={url}
                     onChange={(e) => { setUrl(e.target.value); setError(''); }}
-                    placeholder="https://your-very-long-url.com/path/to/something"
-                    className="flex-1 bg-transparent text-white placeholder-blue-200/30 text-sm py-3 outline-none"
+                    placeholder="https://example.com/long-url"
+                    className="flex-1 bg-transparent text-white placeholder-white/10 text-base py-3 outline-none font-light"
                     autoComplete="off"
                     autoCorrect="off"
                     spellCheck={false}
@@ -139,35 +138,29 @@ export default function ShortenerCard({ onSuccess }) {
 
                 {/* Error */}
                 {error && (
-                  <p id="url-error" role="alert" className="mt-2 text-red-400 text-xs pl-1 animate-fade-in">
+                  <p id="url-error" role="alert" className="mt-3 text-red-400 text-xs pl-1">
                     {error}
                   </p>
                 )}
 
                 {/* TTL selector */}
-                <div className="mt-6">
-                  <div className="flex items-center justify-between mb-3 px-1">
-                    <div className="flex items-center gap-1.5 text-blue-200/50 text-xs font-semibold uppercase tracking-wider">
-                      <Clock size={12} className="text-brand-400" />
-                      Auto-Delete Expiry
-                    </div>
-                    {ttl && (
-                      <span className="text-[10px] bg-brand-500/20 text-brand-300 px-2 py-0.5 rounded-full border border-brand-500/20 animate-pulse">
-                        Privacy Mode Active
-                      </span>
-                    )}
+                <div className="mt-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]">
+                      Expiry Policy
+                    </p>
                   </div>
-                  <div className="flex gap-2 p-1.5 rounded-2xl glass-light border border-white/5" role="group" aria-label="Link expiry">
+                  <div className="flex gap-2" role="group" aria-label="Link expiry">
                     {TTL_OPTIONS.map((opt) => (
                       <button
                         key={String(opt.value)}
                         type="button"
                         id={`ttl-${opt.value ?? 'never'}`}
                         onClick={() => setTtl(opt.value)}
-                        className={`px-3 py-1 rounded-lg text-xs font-medium transition-all duration-150 border
+                        className={`px-5 py-2 rounded-xl text-xs transition-all duration-200 border
                           ${ttl === opt.value
-                            ? 'bg-brand-600 border-brand-500 text-white shadow-sm'
-                            : 'glass-light border-brand-700/20 text-blue-200/60 hover:border-brand-500/40 hover:text-blue-200'
+                            ? 'bg-white text-surface-900 border-white font-semibold'
+                            : 'bg-transparent border-white/5 text-white/40 hover:border-white/20 hover:text-white'
                           }`}
                         aria-pressed={ttl === opt.value}
                       >
@@ -182,15 +175,12 @@ export default function ShortenerCard({ onSuccess }) {
                   id="shorten-btn"
                   type="submit"
                   disabled={loading}
-                  className="mt-6 w-full py-4 rounded-2xl bg-brand-600 hover:bg-brand-500 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-base transition-all duration-200 glow hover:glow flex items-center justify-center gap-2"
+                  className="mt-10 w-full py-4 rounded-2xl bg-brand-600 hover:bg-brand-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-base transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   {loading ? (
-                    <>
-                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin-slow" />
-                      Shortening…
-                    </>
+                    <span className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin-slow" />
                   ) : (
-                    'Shorten →'
+                    'Generate Link'
                   )}
                 </button>
               </form>
@@ -198,68 +188,60 @@ export default function ShortenerCard({ onSuccess }) {
           ) : (
             /* ── Result Panel ── */
             <div className="animate-fade-up">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-brand-600/20 border border-brand-500/30 flex items-center justify-center">
-                  <Check size={20} className="text-brand-400" />
+              <div className="flex items-center gap-4 mb-10">
+                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center">
+                  <Check size={24} className="text-white/40" />
                 </div>
                 <div>
-                  <p className="text-white font-semibold">Your short link is ready!</p>
-                  <p className="text-blue-200/40 text-xs mt-0.5">Click the link to open it in a new tab</p>
+                  <h3 className="text-xl font-semibold text-white">Link Generated</h3>
+                  <p className="text-white/30 text-sm font-light">Your short URL is ready for use.</p>
                 </div>
               </div>
 
               {/* Short URL display */}
-              <div className="bg-surface-800 rounded-2xl border border-brand-700/30 p-4 flex items-center gap-3 mb-4">
+              <div className="bg-white/5 rounded-2xl border border-white/5 p-5 flex items-center gap-4 mb-6">
                 <a
                   id="result-link"
                   href={result.shortUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 text-brand-400 font-semibold hover:text-brand-300 transition-colors duration-150 truncate flex items-center gap-2"
+                  className="flex-1 text-white/80 font-medium hover:text-white transition-colors duration-200 truncate flex items-center gap-2"
                 >
                   {result.shortUrl}
-                  <ExternalLink size={14} className="shrink-0 opacity-60" />
+                  <ExternalLink size={14} className="shrink-0 opacity-20" />
                 </a>
                 <button
                   id="copy-btn"
                   type="button"
                   onClick={copyToClipboard}
-                  className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-sm font-medium transition-all duration-150"
+                  className="shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-surface-900 text-sm font-semibold transition-all duration-200 hover:bg-white/90"
                   aria-label="Copy short URL"
                 >
-                  {copied
-                    ? <><Check size={14} /> Copied!</>
-                    : <><Copy size={14} /> Copy</>
-                  }
+                  {copied ? 'Copied' : 'Copy'}
                 </button>
               </div>
 
               {/* Meta info */}
-              <div className="flex flex-wrap gap-3 text-xs text-blue-200/40 mb-6">
-                <span>Code: <strong className="text-brand-400">{result.shortCode}</strong></span>
+              <div className="flex flex-wrap gap-6 text-[11px] text-white/20 mb-10 uppercase tracking-widest font-semibold">
+                <span>Code <strong className="text-white/60">{result.shortCode}</strong></span>
                 {result.ttl && (
-                  <span>Expires in: <strong className="text-blue-200/70">{result.ttl} day{result.ttl > 1 ? 's' : ''}</strong></span>
+                  <span>Expires <strong className="text-white/60">{result.ttl}d</strong></span>
                 )}
-                <span className="text-green-400/70 font-medium">✓ Cached in Redis</span>
-              </div>
-
-              {/* Original URL */}
-              <div className="p-3 rounded-xl bg-surface-700/50 mb-6">
-                <p className="text-xs text-blue-200/40 mb-1">Original URL</p>
-                <p className="text-xs text-blue-200/60 truncate">{result.originalUrl}</p>
+                <span className="text-white/10 italic font-light">Cached in Redis</span>
               </div>
 
               <button
                 id="shorten-another-btn"
                 type="button"
                 onClick={reset}
-                className="w-full py-3 rounded-2xl glass-light border border-brand-700/20 hover:border-brand-500/40 text-blue-200/70 hover:text-white font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-2xl border border-white/5 hover:border-white/10 text-white/40 hover:text-white font-medium text-sm transition-all duration-300 flex items-center justify-center gap-3"
               >
-                <RotateCcw size={14} />
-                Shorten another URL
+                <RotateCcw size={16} />
+                Generate Another
               </button>
             </div>
           )}
+
         </div>
       </div>
     </section>
