@@ -1,0 +1,16 @@
+import Redis from 'ioredis';
+import env from './env.js';
+
+// Upstash Redis uses TLS (rediss://) — enable tls option automatically
+const isTLS = env.REDIS_URL.startsWith('rediss://');
+
+const client = new Redis(env.REDIS_URL, {
+  lazyConnect: false,
+  maxRetriesPerRequest: 3,
+  tls: isTLS ? {} : undefined,
+});
+
+client.on('error', (err) => console.error('Redis error', err));
+client.on('connect', () => console.log('Redis connected'));
+
+export default client;
