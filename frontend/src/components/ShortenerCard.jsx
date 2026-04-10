@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, Fragment } from 'react';
 import { Link2, Copy, Check, ExternalLink, RotateCcw, Clock } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { shortenUrl } from '../api.js';
@@ -98,7 +98,7 @@ export default function ShortenerCard({ onSuccess }) {
       <div className="max-w-2xl mx-auto">
         <div className="glass rounded-3xl p-6 md:p-8 glow animate-fade-up" style={{ animationDelay: '0.1s' }}>
           {!result ? (
-            <>
+            <Fragment>
               {/* Card Header */}
               <div className="mb-10">
                 <h2 id="shortener-heading" className="text-2xl font-semibold text-white mb-2">
@@ -184,10 +184,11 @@ export default function ShortenerCard({ onSuccess }) {
                   )}
                 </button>
               </form>
-            </>
+            </Fragment>
           ) : (
-            /* ── Result Panel ── */
-            <div className="animate-fade-up">
+            <Fragment>
+              {/* ── Result Panel ── */}
+              <div className="animate-fade-up">
               <div className="flex items-center gap-4 mb-10">
                 <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center">
                   <Check size={24} className="text-white/40" />
@@ -240,7 +241,9 @@ export default function ShortenerCard({ onSuccess }) {
                 Generate Another
               </button>
             </div>
-          )}
+          </Fragment>
+        )}
+
 
         </div>
       </div>

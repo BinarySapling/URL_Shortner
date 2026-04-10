@@ -1,4 +1,6 @@
+import 'dotenv/config';
 import express from 'express';
+import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import { connectDB } from './config/db.js';
@@ -7,6 +9,7 @@ import { rateLimiter } from './middlewares/rateLimiter.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 const app = express();
+app.use(cors());
 app.use(helmet());
 app.use(compression());
 app.use(express.json({ limit: '10kb' }));
