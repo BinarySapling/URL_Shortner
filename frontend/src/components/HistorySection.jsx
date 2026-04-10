@@ -6,13 +6,31 @@ function HistoryItem({ item }) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
+    const text = item.shortUrl;
     try {
-      await navigator.clipboard.writeText(item.shortUrl);
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        throw new Error('Clipboard API unavailable');
+      }
       setCopied(true);
       toast.success('Copied!');
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      toast.error('Failed to copy');
+      // Fallback for non-HTTPS
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        setCopied(true);
+        toast.success('Copied!');
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        toast.error('Failed to copy');
+      }
+      document.body.removeChild(textArea);
     }
   };
 

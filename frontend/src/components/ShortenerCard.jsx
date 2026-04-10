@@ -65,13 +65,31 @@ export default function ShortenerCard({ onSuccess }) {
   };
 
   const copyToClipboard = async () => {
+    const text = result.shortUrl;
     try {
-      await navigator.clipboard.writeText(result.shortUrl);
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        throw new Error('Clipboard API unavailable');
+      }
       setCopied(true);
       toast.success('Copied to clipboard!');
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      toast.error('Failed to copy');
+      // Fallback for non-HTTPS or older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        setCopied(true);
+        toast.success('Copied to clipboard!');
+        setTimeout(() => setCopied(false), 2500);
+      } catch (err) {
+        toast.error('Failed to copy');
+      }
+      document.body.removeChild(textArea);
     }
   };
 
@@ -127,12 +145,19 @@ export default function ShortenerCard({ onSuccess }) {
                 )}
 
                 {/* TTL selector */}
-                <div className="flex items-center gap-3 mt-5 flex-wrap">
-                  <div className="flex items-center gap-1.5 text-blue-200/50 text-xs font-medium">
-                    <Clock size={13} />
-                    Expiry
+                <div className="mt-6">
+                  <div className="flex items-center justify-between mb-3 px-1">
+                    <div className="flex items-center gap-1.5 text-blue-200/50 text-xs font-semibold uppercase tracking-wider">
+                      <Clock size={12} className="text-brand-400" />
+                      Auto-Delete Expiry
+                    </div>
+                    {ttl && (
+                      <span className="text-[10px] bg-brand-500/20 text-brand-300 px-2 py-0.5 rounded-full border border-brand-500/20 animate-pulse">
+                        Privacy Mode Active
+                      </span>
+                    )}
                   </div>
-                  <div className="flex gap-2 flex-wrap" role="group" aria-label="Link expiry">
+                  <div className="flex gap-2 p-1.5 rounded-2xl glass-light border border-white/5" role="group" aria-label="Link expiry">
                     {TTL_OPTIONS.map((opt) => (
                       <button
                         key={String(opt.value)}
