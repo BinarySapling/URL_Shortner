@@ -24,11 +24,10 @@ if [ ! -f ".env" ]; then
   exit 1
 fi
 
-# 2. Validate required env vars
-source .env
+# 2. Validate required env vars (grep-based — safe with special chars like & in URLs)
 MISSING=0
 for VAR in MONGO_URI REDIS_URL BASE_URL; do
-  if [ -z "${!VAR:-}" ]; then
+  if ! grep -q "^${VAR}=" .env; then
     echo "ERROR: Missing required env var: $VAR"
     MISSING=1
   fi
@@ -38,6 +37,7 @@ if [ $MISSING -eq 1 ]; then
   exit 1
 fi
 
+BASE_URL=$(grep "^BASE_URL=" .env | cut -d '=' -f2-)
 echo "[✓] .env validated — BASE_URL=$BASE_URL"
 
 # 3. Pull latest code (if running from a git repo)
