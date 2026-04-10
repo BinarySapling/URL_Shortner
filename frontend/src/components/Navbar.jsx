@@ -6,11 +6,13 @@ export default function Navbar() {
       <div className="glass border-b border-brand-700/20 px-4">
         <div className="max-w-6xl mx-auto h-16 flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group" id="nav-logo">
-            <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-600 text-white shadow-lg group-hover:bg-brand-500 transition-colors duration-200">
-              <Zap size={16} className="fill-white" />
-            </span>
-            <span className="text-xl font-bold tracking-tight gradient-text">snip</span>
+          <a href="#" className="flex items-center gap-3 group" id="nav-logo">
+            <img 
+              src="/logo.png" 
+              alt="Snip Logo" 
+              className="w-9 h-9 object-contain rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-200"
+            />
+            <span className="text-2xl font-black tracking-tighter gradient-text">snip</span>
           </a>
 
           {/* Nav links */}

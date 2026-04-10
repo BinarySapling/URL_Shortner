@@ -3,9 +3,16 @@ export default function HeroSection() {
     <section className="pt-40 pb-20 px-4 text-center" aria-labelledby="hero-heading">
       <div className="max-w-4xl mx-auto animate-fade-up">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light text-sm text-brand-300 font-medium mb-8 border border-brand-500/20">
-          <span className="w-2 h-2 rounded-full bg-brand-400 animate-pulse-dot inline-block" />
-          Redis-cached · Sub-5ms redirects · Microservice backend
+        <div className="flex flex-col items-center mb-8">
+          <img 
+            src="/logo.png" 
+            alt="Snip" 
+            className="w-20 h-20 mb-6 drop-shadow-[0_0_20px_rgba(91,115,245,0.4)] animate-float"
+          />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light text-sm text-brand-300 font-medium border border-brand-500/20">
+            <span className="w-2 h-2 rounded-full bg-brand-400 animate-pulse-dot inline-block" />
+            Redis-cached · Sub-5ms redirects · Microservice backend
+          </div>
         </div>
 
         {/* Heading */}
