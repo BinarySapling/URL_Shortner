@@ -27,9 +27,15 @@ export default function Footer() {
             </a>
           </nav>
 
-          <p className="text-[10px] text-white/10 font-bold uppercase tracking-widest">
-            &copy; {new Date().getFullYear()} SNIP API
-          </p>
+          <div className="flex items-center gap-6">
+            <p className="text-[10px] text-white/10 font-bold uppercase tracking-widest">
+              &copy; {new Date().getFullYear()} SNIP API
+            </p>
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/5">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-[8px] font-bold text-white/40 uppercase tracking-widest">CI/CD Active</span>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
