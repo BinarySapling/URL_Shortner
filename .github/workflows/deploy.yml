@@ -14,44 +14,42 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          # timeout for slow EC2 builds
-          command_timeout: 10m
+          command_timeout: 15m
           script: |
             set -e
 
-            # Matches your EC2 'app' folder
             PROJECT_DIR="/home/${{ secrets.EC2_USERNAME }}/app"
 
-            # Auto-clone if it's the first time or folder was missing
             if [ ! -d "$PROJECT_DIR" ]; then
-              echo "=== Folder missing, cloning repo... ==="
-              git clone https://github.com/${{ github.repository }}.git "$PROJECT_DIR"
+              mkdir -p "$PROJECT_DIR"
             fi
 
             cd "$PROJECT_DIR"
+
+            # Auto-init if not a git repo
+            if [ ! -d ".git" ]; then
+              echo "=== Initializing Git Repo... ==="
+              git init
+              git remote add origin https://github.com/${{ github.repository }}.git || true
+            fi
 
             echo "=== [1/4] Pulling latest code ==="
             git fetch origin main
             git reset --hard origin/main
 
-            echo "=== [2/4] Building new images (containers still running) ==="
-            docker compose build --parallel
+            echo "=== [2/4] Building new images (sudo) ==="
+            sudo docker compose build --parallel
 
-            echo "=== [3/4] Swapping containers on same ports (zero extra ports) ==="
-            # 'up -d' replaces each container in-place:
-            # - Docker stops the old container
-            # - Starts the new one on the identical port binding
-            # - Nginx keeps serving; blip is ~1-2s per service
-            docker compose up -d --remove-orphans --no-build
+            echo "=== [3/4] Swapping containers (sudo) ==="
+            sudo docker compose up -d --remove-orphans --no-build
 
-            echo "=== [4/4] Cleaning up dangling images ==="
-            docker image prune -f
-
-            echo "=== ✅ Deployment complete ==="
-            docker compose ps
+            echo "=== [4/4] Cleaning up (sudo) ==="
+            sudo docker image prune -f
+            echo "=== ✅ Deployment Successfully Completed! ==="
+            sudo docker compose ps
