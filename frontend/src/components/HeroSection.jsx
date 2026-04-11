@@ -12,7 +12,7 @@ export default function HeroSection() {
       <div className="max-w-xl">
         {/* Subtle Brand Prefix */}
         <p className="text-xs font-bold text-brand-500 uppercase tracking-[0.4em] mb-6">
-          Snip v2.0
+          Snip v2.1 — Production Ready
         </p>
 
         {/* Heading - Poppins emphasis */}
