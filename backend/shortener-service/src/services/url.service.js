@@ -1,21 +1,19 @@
+import Hashids from 'hashids';
 import Url from '../models/Url.model.js';
 import redis from '../config/redis.js';
 import env from '../config/env.js';
 import { checkUrlSafety } from './security.service.js';
 
-const BASE62       = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+let hashids;
+const getHashids = () => {
+  if (!hashids) {
+    hashids = new Hashids(env.HASHID_SALT, env.HASHID_MIN_LENGTH);
+  }
+  return hashids;
+};
+
 const COUNTER_KEY  = 'url_shortener:counter';
 const START_OFFSET = 100000;
-
-function toBase62(num) {
-  if (num === 0) return BASE62[0];
-  let result = '';
-  while (num > 0) {
-    result = BASE62[num % 62] + result;
-    num = Math.floor(num / 62);
-  }
-  return result;
-}
 
 export const shortenUrl = async (originalUrl, ttlDays = null) => {
   // 1. Security Check: Prevent Phishing/Malware
@@ -41,7 +39,7 @@ export const shortenUrl = async (originalUrl, ttlDays = null) => {
     sequence = START_OFFSET;
   }
 
-  const shortCode = toBase62(sequence);
+  const shortCode = getHashids().encode(sequence);
   const expiresAt = ttlDays ? new Date(Date.now() + ttlDays * 86_400_000) : null;
 
   // 3. Persistence: Create the final document in one atomic operation
