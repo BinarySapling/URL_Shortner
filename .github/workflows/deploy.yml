@@ -1,0 +1,34 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: SSH and Deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
+            # 1. Navigate to the project directory
+            # NOTE: If your path is different, update it here.
+            cd /home/${{ secrets.EC2_USERNAME }}/URL_SHORTNER
+
+            # 2. Pull the latest changes
+            git pull origin main
+
+            # 3. Rebuild and launch containers with minimal downtime
+            # The -d flag runs them in background, --build ensures new images are created
+            docker compose up -d --build --remove-orphans
+
+            # 4. Clean up dangling images to save space on EC2
+            docker image prune -f
