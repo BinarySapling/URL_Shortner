@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: 🚀 Deploy to EC2
 
 on:
   push:
@@ -6,29 +6,44 @@ on:
 
 jobs:
   deploy:
+    name: Build & Deploy
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
+      - name: Checkout latest code
         uses: actions/checkout@v4
 
-      - name: SSH and Deploy
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
+          # timeout for slow EC2 builds
+          command_timeout: 10m
           script: |
-            # 1. Navigate to the project directory
-            # NOTE: If your path is different, update it here.
-            cd /home/${{ secrets.EC2_USERNAME }}/URL_SHORTNER
+            set -e  # Exit on any error
 
-            # 2. Pull the latest changes
-            git pull origin main
+            PROJECT_DIR="/home/${{ secrets.EC2_USERNAME }}/URL_SHORTNER"
+            cd "$PROJECT_DIR"
 
-            # 3. Rebuild and launch containers with minimal downtime
-            # The -d flag runs them in background, --build ensures new images are created
-            docker compose up -d --build --remove-orphans
+            echo "=== [1/4] Pulling latest code ==="
+            git fetch origin main
+            git reset --hard origin/main
 
-            # 4. Clean up dangling images to save space on EC2
+            echo "=== [2/4] Building new images (containers still running) ==="
+            docker compose build --parallel
+
+            echo "=== [3/4] Swapping containers on same ports (zero extra ports) ==="
+            # 'up -d' replaces each container in-place:
+            # - Docker stops the old container
+            # - Starts the new one on the identical port binding
+            # - Nginx keeps serving; blip is ~1-2s per service
+            docker compose up -d --remove-orphans --no-build
+
+            echo "=== [4/4] Cleaning up dangling images ==="
             docker image prune -f
+
+            echo "=== ✅ Deployment complete ==="
+            docker compose ps

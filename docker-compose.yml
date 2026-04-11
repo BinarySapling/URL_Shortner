@@ -32,6 +32,9 @@ services:
       RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS:-60000}
       RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-100}
       CACHE_TTL: ${CACHE_TTL:-86400}
+      GOOGLE_SAFE_BROWSING_KEY: ${GOOGLE_SAFE_BROWSING_KEY:-}
+      HASHID_SALT: ${HASHID_SALT}
+      HASHID_MIN_LENGTH: ${HASHID_MIN_LENGTH:-5}
     deploy:
       replicas: 2
       restart_policy: { condition: on-failure }
