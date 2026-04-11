@@ -23,9 +23,17 @@ jobs:
           # timeout for slow EC2 builds
           command_timeout: 10m
           script: |
-            set -e  # Exit on any error
+            set -e
 
-            PROJECT_DIR="/home/${{ secrets.EC2_USERNAME }}/URL_SHORTNER"
+            # Matches your EC2 'app' folder
+            PROJECT_DIR="/home/${{ secrets.EC2_USERNAME }}/app"
+
+            # Auto-clone if it's the first time or folder was missing
+            if [ ! -d "$PROJECT_DIR" ]; then
+              echo "=== Folder missing, cloning repo... ==="
+              git clone https://github.com/${{ github.repository }}.git "$PROJECT_DIR"
+            fi
+
             cd "$PROJECT_DIR"
 
             echo "=== [1/4] Pulling latest code ==="
