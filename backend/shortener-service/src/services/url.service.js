@@ -1,6 +1,7 @@
 import Url from '../models/Url.model.js';
 import redis from '../config/redis.js';
 import env from '../config/env.js';
+import { checkUrlSafety } from './security.service.js';
 
 const BASE62       = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 const COUNTER_KEY  = 'url_shortener:counter';
@@ -17,7 +18,15 @@ function toBase62(num) {
 }
 
 export const shortenUrl = async (originalUrl, ttlDays = null) => {
-  // 1. Idempotency Check: return existing code if URL was already shortened
+  // 1. Security Check: Prevent Phishing/Malware
+  const safety = await checkUrlSafety(originalUrl);
+  if (!safety.safe) {
+    const error = new Error(safety.reason);
+    error.status = 403; // Forbidden
+    throw error;
+  }
+
+  // 2. Idempotency Check: return existing code if URL was already shortened
   const existing = await Url.findOne({ originalUrl }).lean();
   if (existing) {
     return { shortCode: existing.shortCode, shortUrl: `${env.BASE_URL}/${existing.shortCode}` };

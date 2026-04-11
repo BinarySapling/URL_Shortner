@@ -14,4 +14,5 @@ export default {
   RATE_LIMIT_WINDOW_MS: parseInt(process.env.RATE_LIMIT_WINDOW_MS)  || 60_000,
   RATE_LIMIT_MAX:       parseInt(process.env.RATE_LIMIT_MAX)         || 100,
   CACHE_TTL:            parseInt(process.env.CACHE_TTL)              || 86_400,
+  GOOGLE_SAFE_BROWSING_KEY: process.env.GOOGLE_SAFE_BROWSING_KEY     || null,
 };

@@ -94,9 +94,8 @@ export default function ShortenerCard({ onSuccess }) {
   };
 
   return (
-    <section id="shortener" className="px-4 pb-12" aria-labelledby="shortener-heading">
-      <div className="max-w-2xl mx-auto">
-        <div className="glass rounded-3xl p-6 md:p-8 glow animate-fade-up" style={{ animationDelay: '0.1s' }}>
+    <div id="shortener" className="animate-fade-up" style={{ animationDelay: '0.1s' }} aria-labelledby="shortener-heading">
+      <div className="glass rounded-3xl p-8 md:p-10 glow">
           {!result ? (
             <Fragment>
               {/* Card Header */}
@@ -247,6 +246,6 @@ export default function ShortenerCard({ onSuccess }) {
 
         </div>
       </div>
-    </section>
+
   );
 }

@@ -5,6 +5,7 @@
     "express": "^5.2.1",
     "helmet": "^8.1.0",
     "ioredis": "^5.10.1",
+    "mongo-sanitize": "^1.1.0",
     "mongoose": "^9.3.3"
   },
   "devDependencies": {

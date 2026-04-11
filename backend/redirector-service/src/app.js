@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import mongoSanitize from 'mongo-sanitize';
 import helmet from 'helmet';
 import compression from 'compression';
 import { connectDB } from './config/db.js';
@@ -8,6 +9,10 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import env from './config/env.js';
 
 const app = express();
+app.use((req, res, next) => {
+  if (req.body) req.body = mongoSanitize(req.body);
+  next();
+});
 app.use(helmet());
 app.use(compression());
 app.use('/', redirectRoutes);

@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import mongoSanitize from 'mongo-sanitize';
 import helmet from 'helmet';
 import compression from 'compression';
 import { connectDB } from './config/db.js';
@@ -10,6 +11,10 @@ import { errorHandler } from './middlewares/errorHandler.js';
 
 const app = express();
 app.use(cors());
+app.use((req, res, next) => {
+  if (req.body) req.body = mongoSanitize(req.body);
+  next();
+});
 app.use(helmet());
 app.use(compression());
 app.use(express.json({ limit: '10kb' }));

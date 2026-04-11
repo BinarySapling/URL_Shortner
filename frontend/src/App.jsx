@@ -44,8 +44,17 @@ export default function App() {
       <div className={`relative min-h-screen transition-opacity duration-1000 ${appLoading ? 'opacity-0' : 'opacity-100'}`}>
         <div className="relative z-10">
           <Navbar />
-          <HeroSection />
-          <ShortenerCard onSuccess={addToHistory} />
+          
+          {/* Main Hero Container - Side-by-side on desktop */}
+          <main className="max-w-7xl mx-auto px-6 lg:flex lg:items-center lg:gap-16 lg:min-h-[85vh] py-12 lg:py-0">
+            <div className="lg:flex-1">
+              <HeroSection />
+            </div>
+            <div className="lg:flex-1 lg:max-w-xl">
+              <ShortenerCard onSuccess={addToHistory} />
+            </div>
+          </main>
+
           {history.length > 0 && (
             <HistorySection history={history} onClear={clearHistory} />
           )}
