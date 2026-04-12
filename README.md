@@ -6,7 +6,7 @@ SNIP is a high-performance, distributed URL shortening microservice architecture
 
 ## Core Infrastructure
 
-![Landing Page Interface](C:/Users/danis/.gemini/antigravity/brain/e5df04fb-d17e-470d-98dc-8fc9807c163d/snip_landing_page_1776014971858.png)
+![Landing Page Interface](docs/snip_landing_page.png)
 
 *   **Microservices Approach**: The framework is decoupled into an isolated `Shortener Service` and an independent `Redirector Service`. This isolates write-heavy administrative API traffic from read-heavy public redirect traffic, allowing asymmetrical horizontal scaling via Docker Compose.
 *   **Cache-Aside Redirection**: Redirection latency is strictly minimized via Redis. Leveraging Node `perf_hooks` for diagnostic profiling, the platform ensures sub-millisecond cached lookups, vastly reducing MongoDB document payload reads.
@@ -21,7 +21,7 @@ SNIP is a high-performance, distributed URL shortening microservice architecture
 
 ## Engineered Edge Handling
 
-![Custom 410 Recovery Interface](C:/Users/danis/.gemini/antigravity/brain/e5df04fb-d17e-470d-98dc-8fc9807c163d/snip_oops_page_1776015012510.png)
+![Custom 410 Recovery Interface](docs/snip_oops_page.png)
 
 A major focus of the core implementation targets rigorous edge constraints commonly evaluated in high-level system designs:
 
