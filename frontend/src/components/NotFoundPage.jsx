@@ -3,6 +3,7 @@ import { AlertCircle, ArrowLeft } from 'lucide-react';
 export default function NotFoundPage() {
   const queryParams = new URLSearchParams(window.location.search);
   const isExpired = queryParams.get('reason') === 'expired';
+  const isServerError = queryParams.get('reason') === 'server-error';
 
   return (
     <main className="flex-1 flex items-center justify-center p-6 min-h-[80vh]">
@@ -19,7 +20,9 @@ export default function NotFoundPage() {
         <p className="text-slate-400 text-lg mb-8 leading-relaxed">
           {isExpired 
             ? "This short link has reached its expiration date and is no longer available."
-            : "The URL you're looking for doesn't exist or might be typed incorrectly."}
+            : isServerError
+              ? "Our servers are experiencing a temporary hiccup. Please try again in a few moments."
+              : "The URL you're looking for doesn't exist or might be typed incorrectly."}
         </p>
 
         <a 
