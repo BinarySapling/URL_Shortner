@@ -10,6 +10,6 @@ const urlSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-urlSchema.index({ createdAt: 1 }, { expireAfterSeconds: 0, partialFilterExpression: { expiresAt: { $ne: null } } });
+urlSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 2592000 });
 
 export default mongoose.model('Url', urlSchema);

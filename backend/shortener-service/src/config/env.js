@@ -14,6 +14,7 @@ export default {
   RATE_LIMIT_WINDOW_MS: parseInt(process.env.RATE_LIMIT_WINDOW_MS)  || 60_000,
   RATE_LIMIT_MAX:       parseInt(process.env.RATE_LIMIT_MAX)         || 100,
   CACHE_TTL:            parseInt(process.env.CACHE_TTL)              || 86_400,
+  DEFAULT_TTL_DAYS:     parseInt(process.env.DEFAULT_TTL_DAYS)       || 90,
   GOOGLE_SAFE_BROWSING_KEY: process.env.GOOGLE_SAFE_BROWSING_KEY     || null,
   HASHID_SALT:          process.env.HASHID_SALT                      || 'default_salt_change_me',
   HASHID_MIN_LENGTH:    parseInt(process.env.HASHID_MIN_LENGTH)      || 5,
