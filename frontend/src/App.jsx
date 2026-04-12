@@ -8,9 +8,12 @@ import FeaturesSection from './components/FeaturesSection.jsx';
 import HowItWorks from './components/HowItWorks.jsx';
 import Footer from './components/Footer.jsx';
 import Preloader from './components/Preloader.jsx';
+import NotFoundPage from './components/NotFoundPage.jsx';
 
 export default function App() {
   const [appLoading, setAppLoading] = useState(true);
+  const pathname = window.location.pathname;
+
   const [history, setHistory] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem('snip_history') || '[]');
@@ -41,26 +44,35 @@ export default function App() {
   return (
     <>
       <Preloader />
-      <div className={`relative min-h-screen transition-opacity duration-1000 ${appLoading ? 'opacity-0' : 'opacity-100'}`}>
-        <div className="relative z-10">
+      <div className={`relative min-h-screen transition-opacity duration-1000 flex flex-col ${appLoading ? 'opacity-0' : 'opacity-100'}`}>
+        <div className="relative z-10 flex flex-col min-h-screen w-full">
           <Navbar />
           
-          {/* Main Hero Container - Side-by-side on desktop */}
-          <main className="max-w-7xl mx-auto px-6 lg:flex lg:items-center lg:gap-16 lg:min-h-[85vh] py-12 lg:py-0">
-            <div className="lg:flex-1">
-              <HeroSection />
-            </div>
-            <div className="lg:flex-1 lg:max-w-xl">
-              <ShortenerCard onSuccess={addToHistory} />
-            </div>
-          </main>
+          {pathname === '/not-found' ? (
+            <NotFoundPage />
+          ) : (
+            <>
+              {/* Main Hero Container - Side-by-side on desktop */}
+              <main className="flex-1 max-w-7xl mx-auto px-6 w-full lg:flex lg:items-center lg:gap-16 lg:min-h-[85vh] py-12 lg:py-0">
+                <div className="lg:flex-1">
+                  <HeroSection />
+                </div>
+                <div className="lg:flex-1 lg:max-w-xl">
+                  <ShortenerCard onSuccess={addToHistory} />
+                </div>
+              </main>
 
-          {history.length > 0 && (
-            <HistorySection history={history} onClear={clearHistory} />
+              {history.length > 0 && (
+                <HistorySection history={history} onClear={clearHistory} />
+              )}
+              <FeaturesSection />
+              <HowItWorks />
+            </>
           )}
-          <FeaturesSection />
-          <HowItWorks />
-          <Footer />
+
+          <div className="mt-auto">
+            <Footer />
+          </div>
         </div>
       </div>
     </>

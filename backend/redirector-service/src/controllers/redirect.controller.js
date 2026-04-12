@@ -10,9 +10,9 @@ export const redirect = async (req, res, next) => {
 
     if (!originalUrl) {
       if (expired) {
-        return res.status(410).json({ error: 'URL has expired and is no longer available' });
+        return res.redirect(302, '/not-found?reason=expired');
       }
-      return res.status(404).json({ error: 'URL not found' });
+      return res.redirect(302, '/not-found');
     }
     
     res.redirect(301, originalUrl);
