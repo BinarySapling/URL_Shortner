@@ -8,13 +8,13 @@ export const resolveCode = async (shortCode) => {
   const clickKey = `clicks:${shortCode}`;
   const timings = { redis: 0, db: 0 };
 
-  // 1. Atomic Click Tracking (Async)
-  redis.incr(clickKey).catch(err => console.error('Redis Click Error:', err));
-
-  // 2. Cache hit check
+  // 1. Cache hit check (READ FIRST to ensure lowest latency before writes)
   const startRedis = performance.now();
   const cached = await redis.get(cacheKey);
   timings.redis = Math.round(performance.now() - startRedis);
+
+  // 2. Atomic Click Tracking (Async fire-and-forget AFTER read leaves the event loop)
+  redis.incr(clickKey).catch(err => console.error('Redis Click Error:', err));
 
   if (cached === 'EXPIRED') {
     console.log(`[Redirect] REDIS HIT for ${shortCode} (EXPIRED) (${timings.redis}ms)`);

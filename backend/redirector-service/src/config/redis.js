@@ -8,7 +8,8 @@ const client = new Redis(env.REDIS_URL, {
   lazyConnect: false,
   maxRetriesPerRequest: 0, // Fail fast for high performance redirects
   connectTimeout: 10000,   // 10s connection timeout
-  keepAlive: 30000,        // Aggressive 30s TCP Keep-Alive
+  keepAlive: 10000,        // TCP Keep-Alive
+  family: 0,               // Force IPv4 to prevent Node.js IPv6 DNS resolution lag spikes with Upstash
   tls: isTLS ? {} : undefined,
   retryStrategy(times) {
     const delay = Math.min(times * 50, 2000);
