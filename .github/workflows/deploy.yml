@@ -3,6 +3,9 @@ name: 🚀 Registry-Based Deploy
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
 
 env:
   REGISTRY: ghcr.io
